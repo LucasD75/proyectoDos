@@ -165,6 +165,7 @@ const CreateSelectModel = () => {
   selectModel.addEventListener('change', (event) => {
     MODELO = event.target.value
     filtrar()
+    // limpiarFiltros()
   })
 }
 
@@ -178,6 +179,7 @@ const createPrecioFilters = () => {
   minPriceInput.addEventListener('input', (event) => {
     PRECIO_MIN = event.target.value
     filtrar()
+    // limpiarFiltros()
   })
 
   const maxPriceInput = document.createElement('input')
@@ -187,6 +189,7 @@ const createPrecioFilters = () => {
   maxPriceInput.addEventListener('input', (event) => {
     PRECIO_MAX = event.target.value
     filtrar()
+    // limpiarFiltros()
   })
 
   divFiltros.appendChild(minPriceInput)
@@ -204,9 +207,20 @@ const createClearButton = () => {
     PRECIO_MIN = ''
     PRECIO_MAX = ''
     filtrar()
+    limpiarFiltros()
   })
 
   divFiltros.appendChild(clearButton)
+}
+// Funcion para limpiar filtros
+const limpiarFiltros = () => {
+  const minPriceInput = document.getElementById('precio-min')
+  const maxPriceInput = document.getElementById('precio-max')
+
+  if (minPriceInput && maxPriceInput) {
+    minPriceInput.value = ''
+    maxPriceInput.value = ''
+  }
 }
 
 printZapas(zapatillas)
