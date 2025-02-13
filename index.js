@@ -87,6 +87,8 @@ let MODELO = ''
 let PRECIO_MIN = ''
 let PRECIO_MAX = ''
 
+//* FILTRAR SEGUN MODELO Y PRECIO
+
 const filtrar = () => {
   const zapatillasFiltradas = zapatillas.filter((zapa) => {
     const cumpleModelo = MODELO === '' || zapa.modelo === MODELO
@@ -96,7 +98,7 @@ const filtrar = () => {
     return cumpleModelo && cumplePrecio
   })
 
-  const divSugerencias = document.querySelector('#sugerencias') // <-- Obtener el div de sugerencias
+  const divSugerencias = document.querySelector('#sugerencias') // <-- Seleccionar el div de sugerencias
 
   if (zapatillasFiltradas.length === 0) {
     const divZapas = document.querySelector('#zapatillas')
@@ -108,6 +110,7 @@ const filtrar = () => {
     printZapas(zapatillasFiltradas)
   }
 }
+//*  MOSTRAR SUGERENCIAS CUANDO NO HAY RESULTADOS
 
 const mostrarSugerencias = () => {
   const divZapas = document.querySelector('#sugerencias')
@@ -133,14 +136,11 @@ const mostrarSugerencias = () => {
   contenedorSugerencias.appendChild(mensajeSugerencias)
 
   if (zapatillasSugeridas.length > 0) {
-    // <-- La clave: condicion añadida
     printZapas(zapatillasSugeridas) // Primero se imprimen las zapatillas
     divZapas.appendChild(contenedorSugerencias) // Luego se añade el mensaje
   }
-
-  // printZapas(zapatillasSugeridas)
-  // divZapas.appendChild(contenedorSugerencias)
 }
+//*  LLENAR ARRAY DE MODELOS
 
 const fillModelos = (zapas) => {
   MODELOS.splice(0)
@@ -151,6 +151,8 @@ const fillModelos = (zapas) => {
   }
 }
 fillModelos(zapatillas)
+
+//  *CREAR SELECT CON OPCIONES DE MODELOS PARA USUARIO
 
 const CreateSelectModel = () => {
   const divFiltros = document.querySelector('#filtros')
@@ -165,10 +167,9 @@ const CreateSelectModel = () => {
   selectModel.addEventListener('change', (event) => {
     MODELO = event.target.value
     filtrar()
-    // limpiarFiltros()
   })
 }
-
+//  *FILTRO PARA PRECIOS
 const createPrecioFilters = () => {
   const divFiltros = document.querySelector('#filtros')
 
@@ -179,7 +180,6 @@ const createPrecioFilters = () => {
   minPriceInput.addEventListener('input', (event) => {
     PRECIO_MIN = event.target.value
     filtrar()
-    // limpiarFiltros()
   })
 
   const maxPriceInput = document.createElement('input')
@@ -189,14 +189,13 @@ const createPrecioFilters = () => {
   maxPriceInput.addEventListener('input', (event) => {
     PRECIO_MAX = event.target.value
     filtrar()
-    // limpiarFiltros()
   })
 
   divFiltros.appendChild(minPriceInput)
   divFiltros.appendChild(maxPriceInput)
 }
 createPrecioFilters()
-
+//  *LIMPIAR FILTROS
 const createClearButton = () => {
   const divFiltros = document.querySelector('#filtros')
   const clearButton = document.createElement('button')
@@ -212,7 +211,7 @@ const createClearButton = () => {
 
   divFiltros.appendChild(clearButton)
 }
-// Funcion para limpiar filtros
+// *Funcion para limpiar filtros
 const limpiarFiltros = () => {
   const minPriceInput = document.getElementById('precio-min')
   const maxPriceInput = document.getElementById('precio-max')
@@ -222,8 +221,7 @@ const limpiarFiltros = () => {
     maxPriceInput.value = ''
   }
 }
-
+fillModelos(zapatillas)
 printZapas(zapatillas)
 CreateSelectModel()
 createClearButton()
-fillModelos(zapatillas)
